@@ -1,0 +1,97 @@
+```
+def aSystSG_auto():
+    cari_Kan = autoSG()
+    #
+    kodInput = (cari_Kan[(1)-1])
+    deDigits = (cari_Kan[(2)-1])
+    
+    if validKan:
+        print(f"Menggunakan: {deDigits}")
+
+        print('|')
+
+        if ((len(kodInput) > (3)) or (len(kodInput) == (3))):
+            #
+            sgBunch = (terJeson01[deDigits[(1)-1]-1])
+            sgType = (terJeson02[deDigits[(2)-1]-1])
+            sgCategory = (terJeson03[deDigits[(3)-1]-1])
+            #
+            print(f"Bunch : {(sgBunch)}")
+            print(f"Type : {(sgType)}")
+            print(f"Category : {(sgCategory)}")
+            #
+            if(len(kodInput) > (3)):
+                #
+                print('|')
+                print(f'Ini kode [{kodInput[3:]}], gak perlu lah ya...')
+            #
+            print(meNutup)
+            time.sleep(0.75)
+            #
+            hasil = searChiver.get(sgBunch, {}).get(sgType, {}).get(sgCategory, {})
+            
+            # Bentuk JSON terstruktur
+            if (hasil):
+                # Format tanpa indentasi tapi dengan line break
+                ind1c4t3 = json.dumps(
+                    hasil,
+                    #
+                    indent = None, 
+                    separators = ('\n', ': '), 
+                    ensure_ascii = False
+                )[1:-1]
+                
+                forStatus = json.dumps(
+                    {"Status": "Data ditemukan"},
+                    #
+                    indent = None,
+                    separators = ('\n', ': '),
+                    ensure_ascii = False
+                )[1:-1]
+                #
+                forStatus = forStatus.replace('"', '')
+
+                # Tambahkan line break manual
+                ind1c4t3 = ind1c4t3.replace(('{'), (''+'\n')).replace(('}'+','), ('')).replace('"', '')
+                ind1c4t3 = ind1c4t3.replace(('"'+'['), ('['+'\n')).replace(('}'+']'), ('\n' + f'{meNutup}'))
+                ind1c4t3 = ind1c4t3.replace(('___SagPents___: ['), (meNutup)).replace('}', '')
+
+                # Hasilan
+                print(f"{ind1c4t3}")
+                #
+                print(f"{forStatus}")
+            else:
+                # Format pesan error
+                errorJSON = json.dumps(
+                    {"Status": "Data tidak ditemukan"},
+                    #
+                    indent = None,
+                    ensure_ascii = False)[1:-1]
+                errorJSON = errorJSON.replace('"', '').replace('{', '').replace('}', '')
+                print(errorJSON)
+            #return (hasil)
+        #
+        elif (len(kodInput) < (3)) :
+            #
+            if (len(kodInput) == (2)):
+                sgBunch = (terJeson01[deDigits[(1)-1]-1])
+                sgType = (terJeson02[deDigits[(2)-1]-1])
+                #
+                print(f"Bunch : {(sgBunch)}")
+                print(f"Type : {(sgType)}")
+                print(f"Category : {terJeson03}")
+                #
+                print(meNutup)
+                time.sleep(0.75)
+                #
+                print('>><<')
+            #
+            elif (len(kodInput) == (1)):
+                aSystSG_XNN1()
+            #
+            print('|')
+            #
+            print('Masih kurang!')
+    else:
+        print("[ERROR] Ada digit di luar rentang yang ditentukan!")
+```
